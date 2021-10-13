@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import PagerTest from "./components/PagerTest";
 
-ReactDOM.render(<PagerTest />, document.getElementById("root"));
+ReactDOM.render(
+  <div>React生命周期，详见index.md</div>,
+  document.getElementById("root")
+);
