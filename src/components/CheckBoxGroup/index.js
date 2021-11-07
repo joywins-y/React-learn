@@ -1,21 +1,14 @@
 import React, { Component } from 'react';
 import types from '../../utils/commonTypes';
 import PropTypes from 'prop-types';
+import withDataGroup from '../HocComp/withDataGroup';
 
-/**
- * 一组多选框
- */
-export default class CheckBoxGroup extends Component {
-  static defaultProps = {
-    datas: [],
-    chooseDatas: [],
-  };
-
+class CheckBox extends Component {
   static propTypes = {
-    datas: types.groupDatas.isRequired,
     name: PropTypes.string.isRequired,
-    chooseDatas: types.chooseDatas,
     onChange: PropTypes.func,
+    info: types.singleData.isRequired,
+    chooseDatas: types.chooseDatas,
   };
 
   handleChange = (e) => {
@@ -25,28 +18,23 @@ export default class CheckBoxGroup extends Component {
     } else {
       newArr = this.props.chooseDatas.filter((item) => item !== e.target.value);
     }
-    this.props.onChange && this.props.onChange(newArr, this.props.name, e);
+    this.props.onChange && this.props.onChange(newArr);
   };
-  /**
-   * 得到一组多选框
-   * @memberof CheckBoxGroup
-   */
-  getCheckBox() {
-    return this.props.datas.map((item) => (
-      <label key={item.value}>
+
+  render() {
+    return (
+      <label>
         <input
           type="checkbox"
           name={this.props.name}
-          value={item.value}
-          checked={this.props.chooseDatas.includes(item.value)}
+          value={this.props.info.value}
+          checked={this.props.chooseDatas.includes(this.props.info.value)}
           onChange={this.handleChange}
         />
-        {item.text}
+        {this.props.info.text}
       </label>
-    ));
-  }
-  render() {
-    const boxs = this.getCheckBox();
-    return <div>{boxs}</div>;
+    );
   }
 }
+
+export default withDataGroup(CheckBox);
